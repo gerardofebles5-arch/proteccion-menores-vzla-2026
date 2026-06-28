@@ -6,22 +6,29 @@ export default function EmergencyCards() {
     { name: 'Defensoría del Pueblo', number: '0800-DEFENDE', color: 'purple' },
   ]
 
+  const colorClasses = {
+    red: 'border-red-500 hover:bg-red-50 text-red-600',
+    blue: 'border-blue-500 hover:bg-blue-50 text-blue-600',
+    green: 'border-green-500 hover:bg-green-50 text-green-600',
+    purple: 'border-purple-500 hover:bg-purple-50 text-purple-600',
+  }
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">📞 Líneas de Emergencia</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="bg-white p-4 md:p-6 rounded-lg shadow-lg">
+      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">📞 Líneas de Emergencia</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
         {contacts.map((contact) => (
           <a
             key={contact.number}
             href={`tel:${contact.number}`}
-            className={`p-4 rounded-lg border-2 border-${contact.color}-500 hover:bg-${contact.color}-50 transition-colors`}
+            className={`p-3 md:p-4 rounded-lg border-2 ${colorClasses[contact.color as keyof typeof colorClasses]} transition-colors`}
           >
-            <div className="font-bold text-gray-800">{contact.name}</div>
-            <div className={`text-${contact.color}-600 font-mono text-lg`}>{contact.number}</div>
+            <div className="font-bold text-gray-800 text-sm md:text-base">{contact.name}</div>
+            <div className={`font-mono text-base md:text-lg`}>{contact.number}</div>
           </a>
         ))}
       </div>
-      <p className="text-sm text-gray-500 mt-4">
+      <p className="text-xs md:text-sm text-gray-500 mt-3 md:mt-4">
         Estas líneas son operadas por organismos oficiales venezolanos.
         Marca inmediatamente si presencias un delito en progreso.
       </p>

@@ -24,14 +24,15 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen bg-gray-50`}>
         <EmergencyBanner />
         <Navbar />
-        <main className="container mx-auto px-4 py-6">
+        <main className="container mx-auto px-4 py-4 md:py-6">
           {children}
         </main>
-        <footer className="bg-gray-800 text-white py-6 mt-12">
-          <div className="container mx-auto px-4 text-center text-sm">
-            <p>⚠️ <strong>EMERGENCIA NACIONAL</strong> - Sistema Protección Menores Venezuela 2026</p>
+        <footer className="bg-gray-800 text-white py-4 md:py-6 mt-8 md:mt-12">
+          <div className="container mx-auto px-4 text-center text-xs md:text-sm">
+            <p className="text-sm md:text-base">⚠️ <strong>EMERGENCIA NACIONAL</strong> - Sistema Protección Menores Venezuela 2026</p>
             <p className="mt-2">Líneas de emergencia: 911 • 0800-SECUESTRO • 0800-DEFENSOR</p>
             <p className="mt-1 text-xs">Operado con ONGs verificadas: IDENNA, FUNDANA, CECODAP, UNICEF</p>
+            <p className="mt-2 text-xs text-gray-400">Acceso público - No requiere cuenta</p>
           </div>
         </footer>
       </body>
