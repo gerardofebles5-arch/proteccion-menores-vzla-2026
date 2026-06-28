@@ -19,12 +19,13 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const [reportesRes, menoresRes, matchesRes, refugiosRes, solicitudesRes] = await Promise.all([
+      const [reportesRes, menoresRes, matchesRes, refugiosRes, solicitudesRes, accesoStaffRes] = await Promise.all([
         fetch('/api/admin/reportes'),
         fetch('/api/admin/menores'),
         fetch('/api/admin/matches'),
         fetch('/api/admin/refugios'),
-        fetch('/api/admin/solicitudes')
+        fetch('/api/admin/solicitudes'),
+        fetch('/api/admin/acceso-staff')
       ])
 
       const data = {
@@ -32,11 +33,46 @@ export default function AdminDashboard() {
         menores: await menoresRes.json(),
         matches: await matchesRes.json(),
         refugios: await refugiosRes.json(),
-        solicitudes: await solicitudesRes.json()
+        solicitudes: await solicitudesRes.json(),
+        accesoStaff: await accesoStaffRes.json()
       }
       setData(data)
     } catch (error) {
       console.error('Error:', error)
+    }
+  }
+
+  const handleAprobarSolicitud = async (id: number) => {
+    try {
+      const res = await fetch('/api/admin/acceso-staff', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, accion: 'aprobar' })
+      })
+      const result = await res.json()
+      if (result.success) {
+        alert(`✅ Aprobado. Código: ${result.token}`)
+        fetchData()
+      }
+    } catch (error) {
+      alert('Error al aprobar')
+    }
+  }
+
+  const handleRechazarSolicitud = async (id: number) => {
+    try {
+      const res = await fetch('/api/admin/acceso-staff', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, accion: 'rechazar' })
+      })
+      const result = await res.json()
+      if (result.success) {
+        alert('❌ Rechazado')
+        fetchData()
+      }
+    } catch (error) {
+      alert('Error al rechazar')
     }
   }
 
@@ -46,6 +82,7 @@ export default function AdminDashboard() {
     { id: 'matches', label: 'Coincidencias' },
     { id: 'refugios', label: 'Refugios' },
     { id: 'solicitudes', label: 'Solicitudes ONGs' },
+    { id: 'acceso-staff', label: 'Acceso Staff' },
     { id: 'tokens', label: 'Gestionar Tokens' },
     { id: 'auditoria', label: 'Auditoría' }
   ]
@@ -117,12 +154,66 @@ export default function AdminDashboard() {
             {/* Lista de solicitudes */}
           </div>
         )}
+        {activeTab === 'acceso-staff' && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">Solicitudes de Acceso Staff</h2>
+            <p className="text-gray-600 mb-4">Aprobar o rechazar solicitudes de funcionarios</p>
+            
+            {data.accesoStaff?.data?.length === 0 ? (
+              <div className="bg-gray-50 p-4 rounded">
+                <p className="text-sm text-gray-600">No hay solicitudes pendientes</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {data.accesoStaff?.data?.map((solicitud: any) => (
+                  <div key={solicitud.id} className="bg-white border rounded-lg p-4">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h3 className="font-bold">{solicitud.nombre}</h3>
+                        <p className="text-sm text-gray-600">{solicitud.organizacion} - {solicitud.cargo}</p>
+                        <p className="text-sm text-gray-500">Cédula: {solicitud.cedula}</p>
+                        <p className="text-sm text-gray-500">Tel: {solicitud.telefono}</p>
+                        <p className="text-sm text-gray-500">Email: {solicitud.email}</p>
+                        {solicitud.referido_por && (
+                          <p className="text-sm text-green-600">Referido por: {solicitud.referido_por}</p>
+                        )}
+                        {solicitud.credencial_url && (
+                          <a 
+                            href={solicitud.credencial_url} 
+                            target="_blank"
+                            className="text-blue-600 text-sm hover:underline"
+                          >
+                            Ver credencial
+                          </a>
+                        )}
+                      </div>
+                      <div className="space-x-2">
+                        <button
+                          onClick={() => handleAprobarSolicitud(solicitud.id)}
+                          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm"
+                        >
+                          ✅ Aprobar
+                        </button>
+                        <button
+                          onClick={() => handleRechazarSolicitud(solicitud.id)}
+                          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm"
+                        >
+                          ❌ Rechazar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
         {activeTab === 'tokens' && (
           <div>
             <h2 className="text-xl font-bold mb-4">Gestionar Tokens de Acceso</h2>
             <div className="space-y-4">
               <div className="bg-gray-50 p-4 rounded">
-                <h3 className="font-bold mb-2">Crear Nuevo Token</h3>
+                <h3 className="font-bold mb-2">Crear Token para ONG</h3>
                 <input 
                   type="text" 
                   placeholder="Nombre de la organización"
@@ -130,6 +221,13 @@ export default function AdminDashboard() {
                 />
                 <button className="bg-green-600 text-white px-4 py-2 rounded">
                   Generar Token
+                </button>
+              </div>
+              <div className="bg-red-50 p-4 rounded">
+                <h3 className="font-bold mb-2">Crear Código de Emergencia</h3>
+                <p className="text-sm text-red-700 mb-2">Solo para situaciones críticas</p>
+                <button className="bg-red-600 text-white px-4 py-2 rounded">
+                  Generar Código Emergencia
                 </button>
               </div>
             </div>
