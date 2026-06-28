@@ -10,6 +10,7 @@ export default function PanelStaffPage() {
     refugiosActivos: 0
   })
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     fetchStats()
@@ -37,6 +38,7 @@ export default function PanelStaffPage() {
       })
     } catch (error) {
       console.error('Error fetching stats:', error)
+      setError('Error al cargar datos. Verifica que Supabase esté configurado.')
     } finally {
       setLoading(false)
     }
@@ -50,6 +52,20 @@ export default function PanelStaffPage() {
           <div className="grid grid-cols-4 gap-4">
             {[1,2,3,4].map(i => <div key={i} className="h-24 bg-gray-200 rounded"></div>)}
           </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-6xl mx-auto p-6">
+        <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg">
+          <h1 className="text-2xl font-bold text-red-800 mb-2">⚠️ Error de Conexión</h1>
+          <p className="text-red-700">{error}</p>
+          <p className="text-sm text-red-600 mt-2">
+            Verifica que las variables de entorno de Supabase estén configuradas en Vercel.
+          </p>
         </div>
       </div>
     )

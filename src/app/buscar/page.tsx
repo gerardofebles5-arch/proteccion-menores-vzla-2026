@@ -15,11 +15,30 @@ export default function BuscarPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    const codigo = `REP-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`
-    setCodigoSeguimiento(codigo)
-    
-    console.log('Datos del reporte:', formData)
-    console.log('Código de seguimiento:', codigo)
+    try {
+      const response = await fetch('/api/menores', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: formData.nombreNino,
+          edad: parseInt(formData.edad),
+          lugar_hallado: formData.lugarVisto,
+          telefono_contacto: formData.telefonoPadre,
+          refugio_id: 'temporal' // Se asignará cuando se implemente autenticación
+        })
+      })
+
+      const result = await response.json()
+      
+      if (result.success) {
+        setCodigoSeguimiento(result.codigo)
+      } else {
+        alert('Error al enviar reporte. Intenta nuevamente.')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert('Error de conexión. Verifica tu internet.')
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

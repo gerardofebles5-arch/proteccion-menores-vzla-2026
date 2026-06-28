@@ -11,7 +11,13 @@ export default function Navbar() {
     { href: '/reporte', label: 'Reporte Urgente', icon: <AlertTriangle size={18} /> },
     { href: '/buscar', label: 'Buscar Hijo/a', icon: <Users size={18} /> },
     { href: '/trata', label: 'Denunciar Trata', icon: <AlertCircle size={18} /> },
-    { href: '/staff', label: 'Acceso Staff', icon: <Shield size={18} /> },
+    { href: '/panel-staff', label: 'Panel Staff', icon: <Shield size={18} /> },
+  ]
+
+  const externalLinks = [
+    { href: 'https://ayudaencamino.com/necesidades', label: 'Ayuda en Camino' },
+    { href: 'https://venezuela-terremoto.com', label: 'Venezuela Terremoto' },
+    { href: 'https://venezuelatebusca.com', label: 'Venezuela Te Busca' },
   ]
 
   return (
@@ -44,6 +50,20 @@ export default function Navbar() {
                 <span>{item.label}</span>
               </a>
             ))}
+            <div className="border-l pl-4 ml-2">
+              <span className="text-xs text-gray-500 block mb-1">Recursos Externos:</span>
+              {externalLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-xs text-blue-600 hover:text-blue-800 mb-1"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
         
