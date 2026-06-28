@@ -18,6 +18,7 @@ export default function Navbar() {
   ]
 
   const externalLinks = [
+    { href: 'https://ayudaavzla.com', label: 'Ayuda a Vzla' },
     { href: 'https://ayudaencamino.com/necesidades', label: 'Ayuda en Camino' },
     { href: 'https://venezuela-terremoto.com', label: 'Venezuela Terremoto' },
     { href: 'https://venezuelatebusca.com', label: 'Venezuela Te Busca' },

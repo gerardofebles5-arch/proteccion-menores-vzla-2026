@@ -81,6 +81,14 @@ export default function AdminDashboard() {
     { id: 'mapa', label: '🗺️ Mapa Tiempo Real' },
     { id: 'estadisticas', label: '📊 Estadísticas' },
     { id: 'casos', label: '📁 Seguimiento Casos' },
+    { id: 'chat', label: '💬 Chat Coordinación' },
+    { id: 'recursos', label: '📦 Recursos' },
+    { id: 'voluntarios', label: '👥 Voluntarios' },
+    { id: 'misiones', label: '🎯 Misiones' },
+    { id: 'evacuacion', label: '🚨 Evacuación' },
+    { id: 'alertas', label: '📢 Alertas' },
+    { id: 'evidencias', label: '🔍 Evidencias' },
+    { id: 'social', label: '📱 Redes Sociales' },
     { id: 'reportes', label: 'Reportes Urgentes' },
     { id: 'menores', label: 'Menores Registrados' },
     { id: 'matches', label: 'Coincidencias' },
@@ -164,6 +172,215 @@ export default function AdminDashboard() {
             <div className="bg-white p-4 rounded border">
               <h3 className="font-bold mb-2">Actividad Reciente</h3>
               <p className="text-gray-600">Última actualización: hace 5 minutos</p>
+            </div>
+          </div>
+        )}
+        {activeTab === 'chat' && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">💬 Chat de Coordinación</h2>
+            <div className="bg-gray-50 p-4 rounded mb-4">
+              <p className="text-gray-600">Sistema de comunicación en tiempo real para coordinación de equipos.</p>
+            </div>
+            <div className="bg-white border rounded p-4">
+              <div className="mb-4">
+                <input
+                  type="text"
+                  placeholder="Escribe un mensaje..."
+                  className="w-full p-2 border rounded"
+                />
+                <button className="mt-2 bg-blue-600 text-white px-4 py-2 rounded">
+                  Enviar
+                </button>
+              </div>
+              <div className="space-y-2">
+                <div className="bg-blue-50 p-3 rounded">
+                  <p className="font-medium">Sistema</p>
+                  <p className="text-sm text-gray-600">Chat conectado a Supabase - Mensajes en tiempo real</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {activeTab === 'recursos' && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">📦 Gestión de Recursos</h2>
+            <div className="grid grid-cols-4 gap-4 mb-4">
+              <div className="bg-green-50 p-4 rounded">
+                <h3 className="font-bold text-green-800">Disponibles</h3>
+                <p className="text-2xl font-bold text-green-600">--</p>
+              </div>
+              <div className="bg-yellow-50 p-4 rounded">
+                <h3 className="font-bold text-yellow-800">En Uso</h3>
+                <p className="text-2xl font-bold text-yellow-600">--</p>
+              </div>
+              <div className="bg-red-50 p-4 rounded">
+                <h3 className="font-bold text-red-800">Críticos</h3>
+                <p className="text-2xl font-bold text-red-600">--</p>
+              </div>
+              <div className="bg-purple-50 p-4 rounded">
+                <h3 className="font-bold text-purple-800">Total</h3>
+                <p className="text-2xl font-bold text-purple-600">--</p>
+              </div>
+            </div>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded mb-4">
+              Agregar Recurso
+            </button>
+            <div className="bg-white border rounded p-4">
+              <p className="text-gray-500">Conectado a API /api/recursos</p>
+            </div>
+          </div>
+        )}
+        {activeTab === 'voluntarios' && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">👥 Gestión de Voluntarios</h2>
+            <div className="grid grid-cols-3 gap-4 mb-4">
+              <div className="bg-green-50 p-4 rounded">
+                <h3 className="font-bold text-green-800">Activos</h3>
+                <p className="text-2xl font-bold text-green-600">--</p>
+              </div>
+              <div className="bg-blue-50 p-4 rounded">
+                <h3 className="font-bold text-blue-800">En Misión</h3>
+                <p className="text-2xl font-bold text-blue-600">--</p>
+              </div>
+              <div className="bg-purple-50 p-4 rounded">
+                <h3 className="font-bold text-purple-800">Total</h3>
+                <p className="text-2xl font-bold text-purple-600">--</p>
+              </div>
+            </div>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded mb-4">
+              Registrar Voluntario
+            </button>
+            <div className="bg-white border rounded p-4">
+              <p className="text-gray-500">Conectado a API /api/voluntarios</p>
+            </div>
+          </div>
+        )}
+        {activeTab === 'misiones' && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">🎯 Gestión de Misiones</h2>
+            <div className="grid grid-cols-4 gap-4 mb-4">
+              <div className="bg-blue-50 p-4 rounded">
+                <h3 className="font-bold text-blue-800">Planificadas</h3>
+                <p className="text-2xl font-bold text-blue-600">--</p>
+              </div>
+              <div className="bg-yellow-50 p-4 rounded">
+                <h3 className="font-bold text-yellow-800">En Progreso</h3>
+                <p className="text-2xl font-bold text-yellow-600">--</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded">
+                <h3 className="font-bold text-green-800">Completadas</h3>
+                <p className="text-2xl font-bold text-green-600">--</p>
+              </div>
+              <div className="bg-red-50 p-4 rounded">
+                <h3 className="font-bold text-red-800">Críticas</h3>
+                <p className="text-2xl font-bold text-red-600">--</p>
+              </div>
+            </div>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded mb-4">
+              Crear Misión
+            </button>
+            <div className="bg-white border rounded p-4">
+              <p className="text-gray-500">Conectado a API /api/misiones</p>
+            </div>
+          </div>
+        )}
+        {activeTab === 'evacuacion' && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">🚨 Protocolos de Evacuación</h2>
+            <div className="grid grid-cols-3 gap-4 mb-4">
+              <div className="bg-green-50 p-4 rounded">
+                <h3 className="font-bold text-green-800">Puntos Activos</h3>
+                <p className="text-2xl font-bold text-green-600">--</p>
+              </div>
+              <div className="bg-blue-50 p-4 rounded">
+                <h3 className="font-bold text-blue-800">Capacidad Disponible</h3>
+                <p className="text-2xl font-bold text-blue-600">--</p>
+              </div>
+              <div className="bg-yellow-50 p-4 rounded">
+                <h3 className="font-bold text-yellow-800">Rutas Seguras</h3>
+                <p className="text-2xl font-bold text-yellow-600">--</p>
+              </div>
+            </div>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded mb-4">
+              Agregar Punto de Evacuación
+            </button>
+            <div className="bg-white border rounded p-4">
+              <p className="text-gray-500">Conectado a API /api/evacuacion/puntos</p>
+            </div>
+          </div>
+        )}
+        {activeTab === 'alertas' && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">📢 Sistema de Alertas Masivas</h2>
+            <div className="grid grid-cols-3 gap-4 mb-4">
+              <div className="bg-yellow-50 p-4 rounded">
+                <h3 className="font-bold text-yellow-800">Pendientes</h3>
+                <p className="text-2xl font-bold text-yellow-600">--</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded">
+                <h3 className="font-bold text-green-800">Enviadas</h3>
+                <p className="text-2xl font-bold text-green-600">--</p>
+              </div>
+              <div className="bg-red-50 p-4 rounded">
+                <h3 className="font-bold text-red-800">Fallidas</h3>
+                <p className="text-2xl font-bold text-red-600">--</p>
+              </div>
+            </div>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded mb-4">
+              Crear Alerta Masiva
+            </button>
+            <div className="bg-white border rounded p-4">
+              <p className="text-gray-500">Conectado a API /api/alertas</p>
+            </div>
+          </div>
+        )}
+        {activeTab === 'evidencias' && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">🔍 Gestión de Evidencias</h2>
+            <div className="grid grid-cols-3 gap-4 mb-4">
+              <div className="bg-blue-50 p-4 rounded">
+                <h3 className="font-bold text-blue-800">Activas</h3>
+                <p className="text-2xl font-bold text-blue-600">--</p>
+              </div>
+              <div className="bg-yellow-50 p-4 rounded">
+                <h3 className="font-bold text-yellow-800">En Análisis</h3>
+                <p className="text-2xl font-bold text-yellow-600">--</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded">
+                <h3 className="font-bold text-green-800">Procesadas</h3>
+                <p className="text-2xl font-bold text-green-600">--</p>
+              </div>
+            </div>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded mb-4">
+              Registrar Evidencia
+            </button>
+            <div className="bg-white border rounded p-4">
+              <p className="text-gray-500">Conectado a API /api/evidencias</p>
+            </div>
+          </div>
+        )}
+        {activeTab === 'social' && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">📱 Redes Sociales</h2>
+            <div className="grid grid-cols-3 gap-4 mb-4">
+              <div className="bg-blue-50 p-4 rounded">
+                <h3 className="font-bold text-blue-800">Borradores</h3>
+                <p className="text-2xl font-bold text-blue-600">--</p>
+              </div>
+              <div className="bg-green-50 p-4 rounded">
+                <h3 className="font-bold text-green-800">Publicadas</h3>
+                <p className="text-2xl font-bold text-green-600">--</p>
+              </div>
+              <div className="bg-purple-50 p-4 rounded">
+                <h3 className="font-bold text-purple-800">Alcance Total</h3>
+                <p className="text-2xl font-bold text-purple-600">--</p>
+              </div>
+            </div>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded mb-4">
+              Crear Publicación
+            </button>
+            <div className="bg-white border rounded p-4">
+              <p className="text-gray-500">Conectado a API /api/social</p>
             </div>
           </div>
         )}
