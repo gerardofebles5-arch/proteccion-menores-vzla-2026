@@ -37,7 +37,7 @@ export default function Navbar() {
           </div>
           
           <button 
-            className="md:hidden"
+            className="md:hidden p-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-md"
             onClick={() => setIsOpen(!isOpen)}
           >
             <Menu size={24} />
