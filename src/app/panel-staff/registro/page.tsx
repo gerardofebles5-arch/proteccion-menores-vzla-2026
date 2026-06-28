@@ -106,14 +106,51 @@ export default function RegistroStaffPage() {
             className="w-full p-2 border border-gray-300 rounded"
           >
             <option value="">Seleccionar...</option>
-            <option value="FUNDANA">FUNDANA</option>
-            <option value="CECODAP">CECODAP</option>
-            <option value="UNICEF">UNICEF</option>
-            <option value="Cruz Roja">Cruz Roja</option>
-            <option value="Protección Civil">Protección Civil</option>
-            <option value="CPNNA">CPNNA</option>
-            <option value="Gobierno">Gobierno</option>
-            <option value="otra">Otra</option>
+            <optgroup label="ONGs Principales">
+              <option value="FUNDANA">FUNDANA</option>
+              <option value="CECODAP">CECODAP</option>
+              <option value="UNICEF">UNICEF</option>
+              <option value="Cruz Roja">Cruz Roja</option>
+              <option value="Aldeas SOS">Aldeas SOS</option>
+              <option value="Save the Children">Save the Children</option>
+              <option value="World Vision">World Vision</option>
+              <option value="Plan International">Plan International</option>
+              <option value="Caritas">Caritas</option>
+            </optgroup>
+            <optgroup label="Gobierno y Entes Públicos">
+              <option value="Protección Civil">Protección Civil</option>
+              <option value="CPNNA">CPNNA</option>
+              <option value="Defensoría del Pueblo">Defensoría del Pueblo</option>
+              <option value="CICPC">CICPC</option>
+              <option value="Fiscalía">Fiscalía</option>
+              <option value="Ministerio Público">Ministerio Público</option>
+              <option value="Ministerio de Educación">Ministerio de Educación</option>
+              <option value="Ministerio de Salud">Ministerio de Salud</option>
+              <option value="Ministerio de la Familia">Ministerio de la Familia</option>
+              <option value="INN">INN</option>
+              <option value="IVSS">IVSS</option>
+              <option value="Policía Nacional">Policía Nacional</option>
+              <option value="Guardia Nacional">Guardia Nacional</option>
+              <option value="Bomberos">Bomberos</option>
+              <option value="Fundación del Niño">Fundación del Niño</option>
+            </optgroup>
+            <optgroup label="Universidades">
+              <option value="UCAB">UCAB</option>
+              <option value="USB">USB</option>
+              <option value="UCV">UCV</option>
+              <option value="UNESR">UNESR</option>
+              <option value="ULA">ULA</option>
+              <option value="UDO">UDO</option>
+              <option value="UNELLEZ">UNELLEZ</option>
+            </optgroup>
+            <optgroup label="Otras Instituciones">
+              <option value="Gobernaciones">Gobernaciones</option>
+              <option value="Alcaldías">Alcaldías</option>
+              <option value="Consejos Comunales">Consejos Comunales</option>
+              <option value="Comités de Salud">Comités de Salud</option>
+              <option value="Comités de Educación">Comités de Educación</option>
+              <option value="otra">Otra (especificar en cargo)</option>
+            </optgroup>
           </select>
         </div>
 
@@ -183,7 +220,10 @@ export default function RegistroStaffPage() {
 
         <div className="bg-blue-50 p-4 rounded">
           <p className="text-sm text-blue-700">
-            <strong>⚡ Validación automática:</strong> Si cumple los criterios (organización autorizada, email oficial, cédula válida), será aprobado en segundos.
+            <strong>⚡ Validación automática:</strong> Sistema inteligente que valida organización, email oficial, cédula, cargo, teléfono y más. Aprobación en segundos si cumple criterios (60+ puntos).
+          </p>
+          <p className="text-sm text-blue-700 mt-1">
+            <strong>🛡️ Seguridad avanzada:</strong> Detección automática de fraude con análisis de patrones, IPs, emails temporales y comportamientos sospechosos.
           </p>
           <p className="text-sm text-blue-700 mt-1">
             <strong>⏱️ Revisión manual:</strong> Si no cumple criterios, será revisado manualmente (menos de 1 hora).
