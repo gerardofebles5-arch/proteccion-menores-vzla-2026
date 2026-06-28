@@ -245,38 +245,97 @@ ALTER TABLE publicaciones_sociales ENABLE ROW LEVEL SECURITY;
 ALTER TABLE documentos_legales ENABLE ROW LEVEL SECURITY;
 
 -- Políticas RLS básicas (ajustar según necesidades de seguridad)
-CREATE OR REPLACE POLICY "Lectura pública para chat_canales" ON chat_canales FOR SELECT USING (true);
-CREATE OR REPLACE POLICY "Lectura pública para chat_mensajes" ON chat_mensajes FOR SELECT USING (true);
-CREATE OR REPLACE POLICY "Lectura pública para recursos" ON recursos FOR SELECT USING (true);
-CREATE OR REPLACE POLICY "Lectura pública para voluntarios" ON voluntarios FOR SELECT USING (true);
-CREATE OR REPLACE POLICY "Lectura pública para misiones" ON misiones FOR SELECT USING (true);
-CREATE OR REPLACE POLICY "Lectura pública para puntos_evacuacion" ON puntos_evacuacion FOR SELECT USING (true);
-CREATE OR REPLACE POLICY "Lectura pública para alertas_masivas" ON alertas_masivas FOR SELECT USING (true);
-CREATE OR REPLACE POLICY "Lectura pública para metricas" ON metricas FOR SELECT USING (true);
-CREATE OR REPLACE POLICY "Lectura pública para kpis" ON kpis FOR SELECT USING (true);
-CREATE OR REPLACE POLICY "Lectura pública para evidencias" ON evidencias FOR SELECT USING (true);
-CREATE OR REPLACE POLICY "Lectura pública para publicaciones_sociales" ON publicaciones_sociales FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Lectura pública para chat_canales" ON chat_canales;
+CREATE POLICY "Lectura pública para chat_canales" ON chat_canales FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Lectura pública para chat_mensajes" ON chat_mensajes;
+CREATE POLICY "Lectura pública para chat_mensajes" ON chat_mensajes FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Lectura pública para recursos" ON recursos;
+CREATE POLICY "Lectura pública para recursos" ON recursos FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Lectura pública para voluntarios" ON voluntarios;
+CREATE POLICY "Lectura pública para voluntarios" ON voluntarios FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Lectura pública para misiones" ON misiones;
+CREATE POLICY "Lectura pública para misiones" ON misiones FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Lectura pública para puntos_evacuacion" ON puntos_evacuacion;
+CREATE POLICY "Lectura pública para puntos_evacuacion" ON puntos_evacuacion FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Lectura pública para alertas_masivas" ON alertas_masivas;
+CREATE POLICY "Lectura pública para alertas_masivas" ON alertas_masivas FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Lectura pública para metricas" ON metricas;
+CREATE POLICY "Lectura pública para metricas" ON metricas FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Lectura pública para kpis" ON kpis;
+CREATE POLICY "Lectura pública para kpis" ON kpis FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Lectura pública para evidencias" ON evidencias;
+CREATE POLICY "Lectura pública para evidencias" ON evidencias FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Lectura pública para publicaciones_sociales" ON publicaciones_sociales;
+CREATE POLICY "Lectura pública para publicaciones_sociales" ON publicaciones_sociales FOR SELECT USING (true);
 
 -- Políticas de inserción (requieren autenticación en producción)
-CREATE OR REPLACE POLICY "Inserción autenticada" ON chat_mensajes FOR INSERT WITH CHECK (true);
-CREATE OR REPLACE POLICY "Inserción autenticada" ON recursos FOR INSERT WITH CHECK (true);
-CREATE OR REPLACE POLICY "Inserción autenticada" ON voluntarios FOR INSERT WITH CHECK (true);
-CREATE OR REPLACE POLICY "Inserción autenticada" ON misiones FOR INSERT WITH CHECK (true);
-CREATE OR REPLACE POLICY "Inserción autenticada" ON alertas_masivas FOR INSERT WITH CHECK (true);
-CREATE OR REPLACE POLICY "Inserción autenticada" ON metricas FOR INSERT WITH CHECK (true);
-CREATE OR REPLACE POLICY "Inserción autenticada" ON kpis FOR INSERT WITH CHECK (true);
-CREATE OR REPLACE POLICY "Inserción autenticada" ON evidencias FOR INSERT WITH CHECK (true);
-CREATE OR REPLACE POLICY "Inserción autenticada" ON publicaciones_sociales FOR INSERT WITH CHECK (true);
-CREATE OR REPLACE POLICY "Inserción autenticada" ON documentos_legales FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "Inserción autenticada" ON chat_mensajes;
+CREATE POLICY "Inserción autenticada" ON chat_mensajes FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Inserción autenticada" ON recursos;
+CREATE POLICY "Inserción autenticada" ON recursos FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Inserción autenticada" ON voluntarios;
+CREATE POLICY "Inserción autenticada" ON voluntarios FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Inserción autenticada" ON misiones;
+CREATE POLICY "Inserción autenticada" ON misiones FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Inserción autenticada" ON alertas_masivas;
+CREATE POLICY "Inserción autenticada" ON alertas_masivas FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Inserción autenticada" ON metricas;
+CREATE POLICY "Inserción autenticada" ON metricas FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Inserción autenticada" ON kpis;
+CREATE POLICY "Inserción autenticada" ON kpis FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Inserción autenticada" ON evidencias;
+CREATE POLICY "Inserción autenticada" ON evidencias FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Inserción autenticada" ON publicaciones_sociales;
+CREATE POLICY "Inserción autenticada" ON publicaciones_sociales FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Inserción autenticada" ON documentos_legales;
+CREATE POLICY "Inserción autenticada" ON documentos_legales FOR INSERT WITH CHECK (true);
 
 -- Políticas de actualización
-CREATE OR REPLACE POLICY "Actualización autenticada" ON chat_mensajes FOR UPDATE USING (true);
-CREATE OR REPLACE POLICY "Actualización autenticada" ON recursos FOR UPDATE USING (true);
-CREATE OR REPLACE POLICY "Actualización autenticada" ON voluntarios FOR UPDATE USING (true);
-CREATE OR REPLACE POLICY "Actualización autenticada" ON misiones FOR UPDATE USING (true);
-CREATE OR REPLACE POLICY "Actualización autenticada" ON alertas_masivas FOR UPDATE USING (true);
-CREATE OR REPLACE POLICY "Actualización autenticada" ON metricas FOR UPDATE USING (true);
-CREATE OR REPLACE POLICY "Actualización autenticada" ON kpis FOR UPDATE USING (true);
-CREATE OR REPLACE POLICY "Actualización autenticada" ON evidencias FOR UPDATE USING (true);
-CREATE OR REPLACE POLICY "Actualización autenticada" ON publicaciones_sociales FOR UPDATE USING (true);
-CREATE OR REPLACE POLICY "Actualización autenticada" ON documentos_legales FOR UPDATE USING (true);
+DROP POLICY IF EXISTS "Actualización autenticada" ON chat_mensajes;
+CREATE POLICY "Actualización autenticada" ON chat_mensajes FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Actualización autenticada" ON recursos;
+CREATE POLICY "Actualización autenticada" ON recursos FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Actualización autenticada" ON voluntarios;
+CREATE POLICY "Actualización autenticada" ON voluntarios FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Actualización autenticada" ON misiones;
+CREATE POLICY "Actualización autenticada" ON misiones FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Actualización autenticada" ON alertas_masivas;
+CREATE POLICY "Actualización autenticada" ON alertas_masivas FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Actualización autenticada" ON metricas;
+CREATE POLICY "Actualización autenticada" ON metricas FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Actualización autenticada" ON kpis;
+CREATE POLICY "Actualización autenticada" ON kpis FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Actualización autenticada" ON evidencias;
+CREATE POLICY "Actualización autenticada" ON evidencias FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Actualización autenticada" ON publicaciones_sociales;
+CREATE POLICY "Actualización autenticada" ON publicaciones_sociales FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Actualización autenticada" ON documentos_legales;
+CREATE POLICY "Actualización autenticada" ON documentos_legales FOR UPDATE USING (true);
