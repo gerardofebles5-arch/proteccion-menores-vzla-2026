@@ -1,6 +1,6 @@
 'use client'
 
-import { Menu, Shield, AlertTriangle, Home, Users, AlertCircle } from 'lucide-react'
+import { Menu, Shield, AlertTriangle, Home, Users, AlertCircle, Lock } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Navbar() {
@@ -53,6 +53,13 @@ export default function Navbar() {
                 <span>{item.label}</span>
               </a>
             ))}
+            <a
+              href="/admin"
+              className="flex items-center space-x-1 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-700 transition-colors text-sm"
+            >
+              <Lock size={14} />
+              <span>Admin</span>
+            </a>
             <div className="border-l pl-4 ml-2 flex flex-col justify-center">
               <span className="text-xs text-gray-500 block mb-2 font-semibold">🌐 RECURSOS EXTERNOS:</span>
               <div className="flex flex-col space-y-1">
