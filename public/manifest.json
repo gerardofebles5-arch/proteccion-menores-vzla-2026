@@ -1,0 +1,44 @@
+{
+  "name": "Protección Menores Vzla 2026",
+  "short_name": "Protección Menores",
+  "description": "Sistema seguro de reunificación familiar en emergencia de sismos Venezuela 2026",
+  "theme_color": "#dc2626",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["emergency", "security", "social"],
+  "shortcuts": [
+    {
+      "name": "Reporte Urgente",
+      "short_name": "Reporte",
+      "description": "Reportar situación de emergencia",
+      "url": "/reporte",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Buscar Hijo/a",
+      "short_name": "Buscar",
+      "description": "Buscar menor desaparecido",
+      "url": "/buscar",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
