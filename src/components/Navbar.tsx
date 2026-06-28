@@ -13,6 +13,7 @@ export default function Navbar() {
     { href: '/trata', label: 'Denunciar Trata', icon: <AlertCircle size={18} /> },
     { href: '/refugios', label: 'Refugios', icon: <Shield size={18} /> },
     { href: '/contacto-organismos', label: 'Contacto ONGs', icon: <Shield size={18} /> },
+    { href: '/denuncia-interna', label: '🛡️ Denuncia Interna', icon: <Shield size={18} /> },
     { href: '/panel-staff', label: 'Panel Staff', icon: <Shield size={18} /> },
   ]
 

@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { 
+  isIPBlacklisted, 
+  detectVPN, 
+  reputationSystem, 
+  earlyWarningSystem,
+  encryptData,
+  hashSensitiveData
+} from '@/lib/security'
 
 // Organizaciones en lista blanca para aprobación automática (expandido al máximo)
 const ORGANIZACIONES_AUTORIZADAS = [
@@ -349,11 +357,41 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const ip = req.headers.get('x-forwarded-for') || 'unknown'
 
-    // Detección de fraude
+    // NIVEL 1: Verificación de IP en lista negra (tratantes conocidos)
+    if (isIPBlacklisted(ip)) {
+      console.log('🚨 IP en lista negra detectada:', ip)
+      await supabaseAdmin.from('security_alerts').insert({
+        tipo: 'BLACKLISTED_IP',
+        ip,
+        datos: body,
+        severidad: 'CRITICAL'
+      })
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Acceso denegado por seguridad' 
+      }, { status: 403 })
+    }
+
+    // NIVEL 2: Detección de VPN/Proxy (tratantes ocultando ubicación)
+    if (detectVPN(ip)) {
+      console.log('⚠️ VPN/Proxy detectado:', ip)
+      await supabaseAdmin.from('security_alerts').insert({
+        tipo: 'VPN_DETECTED',
+        ip,
+        datos: body,
+        severidad: 'HIGH'
+      })
+      return NextResponse.json({ 
+        success: false, 
+        error: 'No se permite acceso desde VPN/Proxy por seguridad' 
+      }, { status: 403 })
+    }
+
+    // NIVEL 3: Detección de fraude avanzada
     const fraudeCheck = await detectarFraude(body, supabaseAdmin, ip)
 
     if (fraudeCheck.fraudeDetectado) {
-      // Rechazar automáticamente si hay fraude
+      console.log('🚨 Fraude detectado:', fraudeCheck.alertas)
       await supabaseAdmin
         .from('solicitudes_acceso')
         .insert({
@@ -363,6 +401,14 @@ export async function POST(req: NextRequest) {
           razon_rechazo: fraudeCheck.alertas.join(', ')
         })
 
+      await supabaseAdmin.from('security_alerts').insert({
+        tipo: 'FRAUD_DETECTED',
+        ip,
+        alertas: fraudeCheck.alertas,
+        datos: body,
+        severidad: 'HIGH'
+      })
+
       return NextResponse.json({ 
         success: false, 
         error: 'Solicitud rechazada por seguridad',
@@ -370,25 +416,45 @@ export async function POST(req: NextRequest) {
       }, { status: 403 })
     }
 
+    // NIVEL 4: Sistema de alertas tempranas
+    const hasAnomaly = earlyWarningSystem.checkForAnomalies(
+      ip, 
+      'ACCESS_REQUEST', 
+      { body, ip }
+    )
+
+    if (hasAnomaly) {
+      console.log('⚠️ Comportamiento anómalo detectado')
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Solicitud bajo revisión de seguridad' 
+      }, { status: 403 })
+    }
+
     // Validación automática
     const validacion = await validarSolicitudAutomatica(body, supabaseAdmin)
 
-    // Insertar solicitud
+    // Insertar solicitud con datos sensibles cifrados
+    const cedulaCifrada = hashSensitiveData(body.cedula)
+    const telefonoCifrado = encryptData(body.telefono)
+    const emailCifrado = encryptData(body.email)
+
     const { data, error } = await supabaseAdmin
       .from('solicitudes_acceso')
       .insert({
         nombre: body.nombre,
         organizacion: body.organizacion,
         cargo: body.cargo,
-        cedula: body.cedula,
-        telefono: body.telefono,
-        email: body.email,
+        cedula: cedulaCifrada, // Hash irreversible
+        telefono: telefonoCifrado, // Cifrado reversible
+        email: emailCifrado, // Cifrado reversible
         credencial_url: body.credencial_url,
         referido_por: body.referido_por,
         ip_address: ip,
         estado: validacion.aprobado ? 'aprobado' : 'pendiente',
         validacion_auto: validacion,
-        metodo_aprobacion: validacion.aprobado ? 'automatica' : 'manual'
+        metodo_aprobacion: validacion.aprobado ? 'automatica' : 'manual',
+        nivel_seguridad: 'EXTREME'
       })
       .select('id')
       .single()
