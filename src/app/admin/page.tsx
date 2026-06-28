@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function AdminPage() {
+  const [usuario, setUsuario] = useState('')
   const [clave, setClave] = useState('')
   const [error, setError] = useState('')
   const router = useRouter()
@@ -12,14 +13,16 @@ export default function AdminPage() {
     e.preventDefault()
     setError('')
 
-    // Clave secreta del superadministrador (NO en código, usar variable de entorno)
-    const CLAVE_SECRETA = process.env.NEXT_PUBLIC_ADMIN_KEY || 'SUPER-ADMIN-2026'
+    // Credenciales del superadministrador
+    const USUARIO_ADMIN = 'salomon'
+    const CLAVE_ADMIN = 'Elsoldemivida1'
 
-    if (clave === CLAVE_SECRETA) {
+    if (usuario === USUARIO_ADMIN && clave === CLAVE_ADMIN) {
       localStorage.setItem('superadmin_token', Date.now().toString())
+      localStorage.setItem('superadmin_user', usuario)
       router.push('/admin/dashboard')
     } else {
-      setError('Clave incorrecta')
+      setError('Usuario o contraseña incorrectos')
     }
   }
 
@@ -34,7 +37,21 @@ export default function AdminPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
-              Clave de Acceso
+              Usuario
+            </label>
+            <input
+              type="text"
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
+              className="w-full p-3 border border-gray-700 rounded-lg bg-gray-800 text-white focus:ring-2 focus:ring-red-500"
+              placeholder="Usuario"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Contraseña
             </label>
             <input
               type="password"
