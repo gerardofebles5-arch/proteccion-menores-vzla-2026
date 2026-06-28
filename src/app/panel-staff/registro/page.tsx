@@ -48,10 +48,15 @@ export default function RegistroStaffPage() {
       const data = await response.json()
 
       if (data.success) {
-        alert('✅ Solicitud enviada. El superadministrador revisará su credencial y aprobará el acceso.')
-        router.push('/panel-staff/acceso')
+        if (data.aprobadoAutomaticamente) {
+          alert(`✅ ¡APROBADO AUTOMÁTICAMENTE!\n\nSu código de acceso es: ${data.token}\n\nPuntaje: ${data.validacion.puntaje}/${data.validacion.umbral}\nRazones: ${data.validacion.razones.join(', ')}`)
+          router.push('/panel-staff/acceso')
+        } else {
+          alert(`⏳ Solicitud enviada. Revisión manual requerida.\n\nPuntaje: ${data.validacion.puntaje}/${data.validacion.umbral}\nRazones: ${data.validacion.razones.join(', ')}`)
+          router.push('/panel-staff/acceso')
+        }
       } else {
-        alert('❌ Error al enviar solicitud')
+        alert(`❌ ${data.error || 'Error al enviar solicitud'}`)
       }
     } catch (error) {
       alert('❌ Error de conexión')
@@ -64,7 +69,7 @@ export default function RegistroStaffPage() {
     <div className="max-w-2xl mx-auto p-6">
       <h1 className="text-3xl font-bold text-gray-800 mb-2">📝 Solicitud de Acceso Staff</h1>
       <p className="text-gray-600 mb-6">
-        Verifique su identidad como funcionario oficial para acceder al sistema.
+        Verifique su identidad como funcionario oficial. El sistema validará automáticamente su solicitud.
       </p>
 
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg space-y-4">
@@ -178,7 +183,10 @@ export default function RegistroStaffPage() {
 
         <div className="bg-blue-50 p-4 rounded">
           <p className="text-sm text-blue-700">
-            <strong>⏱️ Tiempo de aprobación:</strong> Generalmente menos de 1 hora durante horario laboral.
+            <strong>⚡ Validación automática:</strong> Si cumple los criterios (organización autorizada, email oficial, cédula válida), será aprobado en segundos.
+          </p>
+          <p className="text-sm text-blue-700 mt-1">
+            <strong>⏱️ Revisión manual:</strong> Si no cumple criterios, será revisado manualmente (menos de 1 hora).
           </p>
         </div>
 
