@@ -11,6 +11,8 @@ export default function Navbar() {
     { href: '/reporte', label: 'Reporte Urgente', icon: <AlertTriangle size={18} /> },
     { href: '/buscar', label: 'Buscar Hijo/a', icon: <Users size={18} /> },
     { href: '/trata', label: 'Denunciar Trata', icon: <AlertCircle size={18} /> },
+    { href: '/refugios', label: 'Refugios', icon: <Shield size={18} /> },
+    { href: '/contacto-organismos', label: 'Contacto ONGs', icon: <Shield size={18} /> },
     { href: '/panel-staff', label: 'Panel Staff', icon: <Shield size={18} /> },
   ]
 

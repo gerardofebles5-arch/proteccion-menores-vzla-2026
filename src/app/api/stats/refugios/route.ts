@@ -4,8 +4,9 @@ import { supabaseAdmin } from '@/lib/supabase'
 export async function GET() {
   try {
     const { count, error } = await supabaseAdmin
-      .from('organizaciones')
+      .from('refugios')
       .select('*', { count: 'exact', head: true })
+      .eq('activo', true)
 
     if (error) throw error
 
