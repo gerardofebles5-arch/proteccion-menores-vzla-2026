@@ -1,8 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function PanelStaffPage() {
+  const router = useRouter()
   const [stats, setStats] = useState({
     menoresActivos: 0,
     reportesHoy: 0,
@@ -13,6 +15,11 @@ export default function PanelStaffPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    const token = localStorage.getItem('staff_token')
+    if (!token) {
+      router.push('/panel-staff/acceso')
+      return
+    }
     fetchStats()
   }, [])
 
@@ -100,18 +107,18 @@ export default function PanelStaffPage() {
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-xl font-bold text-gray-800 mb-4">⚡ Acciones Rápidas</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-lg text-left">
+          <a href="/panel-staff/matches" className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-lg text-left cursor-pointer">
             <div className="font-bold">Ver Matches</div>
-            <div className="text-sm opacity-80">Revisar coincidencias</div>
-          </button>
-          <button className="bg-green-600 hover:bg-green-700 text-white p-4 rounded-lg text-left">
+            <div className="text-sm opacity-80">Revisar coincidencias ({stats.matchesPendientes} pendientes)</div>
+          </a>
+          <a href="/panel-staff/registrar" className="bg-green-600 hover:bg-green-700 text-white p-4 rounded-lg text-left cursor-pointer">
             <div className="font-bold">Registrar Menor</div>
-            <div className="text-sm opacity-80">Nuevo hallazgo</div>
-          </button>
-          <button className="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-lg text-left">
+            <div className="text-sm opacity-80">Nuevo hallazgo en refugio</div>
+          </a>
+          <a href="/panel-staff/auditoria" className="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-lg text-left cursor-pointer">
             <div className="font-bold">Auditoría</div>
-            <div className="text-sm opacity-80">Ver accesos</div>
-          </button>
+            <div className="text-sm opacity-80">Ver accesos al sistema</div>
+          </a>
         </div>
       </div>
     </div>

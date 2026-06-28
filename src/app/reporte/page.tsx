@@ -10,6 +10,9 @@ export default function ReportePage() {
   const [descripcionSospechoso, setDescripcionSospechoso] = useState('')
   const [archivos, setArchivos] = useState<File[]>([])
   const [enviando, setEnviando] = useState(false)
+  const [grabando, setGrabando] = useState(false)
+  const [audioBlob, setAudioBlob] = useState<Blob | null>(null)
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -68,6 +71,35 @@ export default function ReportePage() {
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setArchivos(Array.from(e.target.files))
+    }
+  }
+
+  const iniciarGrabacion = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const recorder = new MediaRecorder(stream)
+      const chunks: BlobPart[] = []
+
+      recorder.ondataavailable = (e) => chunks.push(e.data)
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'audio/webm' })
+        setAudioBlob(blob)
+        setArchivos(prev => [...prev, new File([blob], 'grabacion.webm', { type: 'audio/webm' })])
+      }
+
+      recorder.start()
+      setMediaRecorder(recorder)
+      setGrabando(true)
+    } catch (error) {
+      alert('No se pudo acceder al micrófono. Verifica los permisos.')
+    }
+  }
+
+  const detenerGrabacion = () => {
+    if (mediaRecorder) {
+      mediaRecorder.stop()
+      mediaRecorder.stream.getTracks().forEach(track => track.stop())
+      setGrabando(false)
     }
   }
 
@@ -145,6 +177,33 @@ export default function ReportePage() {
             />
           </div>
         ) : null}
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Grabación de Audio (opcional - más rápido)
+          </label>
+          <div className="bg-gray-50 border-2 border-gray-300 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <Mic className={grabando ? "text-red-600 animate-pulse" : "text-gray-400"} size={24} />
+                <span className="text-sm text-gray-700">
+                  {grabando ? "🔴 Grabando..." : audioBlob ? "✅ Audio grabado" : "Presiona para grabar"}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={grabando ? detenerGrabacion : iniciarGrabacion}
+                className={`px-4 py-2 rounded-lg font-medium ${
+                  grabando 
+                    ? 'bg-red-600 hover:bg-red-700 text-white' 
+                    : 'bg-blue-600 hover:bg-blue-700 text-white'
+                }`}
+              >
+                {grabando ? '⏹️ Detener' : '🎤 Grabar'}
+              </button>
+            </div>
+          </div>
+        </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">

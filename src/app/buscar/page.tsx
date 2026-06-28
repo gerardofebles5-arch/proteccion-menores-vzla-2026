@@ -6,7 +6,12 @@ export default function BuscarPage() {
   const [formData, setFormData] = useState({
     nombreNino: '',
     edad: '',
+    genero: '',
+    colorCabello: '',
+    colorOjos: '',
+    altura: '',
     lugarVisto: '',
+    fechaDesaparicion: '',
     telefonoPadre: ''
   })
 
@@ -89,34 +94,103 @@ export default function BuscarPage() {
       <div className="bg-white p-4 rounded-lg shadow-lg">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">👶 Reportar Menor Desaparecido</h1>
         <p className="text-gray-600 mb-4 text-sm">
-          Formulario rápido para emergencia. Solo campos esenciales.
+          Formulario optimizado para emergencia. Campos esenciales para identificación rápida.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-3">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nombre del niño/a *</label>
-            <input
-              type="text"
-              name="nombreNino"
-              required
-              value={formData.nombreNino}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
-              placeholder="Nombre completo"
-            />
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Nombre *</label>
+              <input
+                type="text"
+                name="nombreNino"
+                required
+                value={formData.nombreNino}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+                placeholder="Nombre"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Edad *</label>
+              <input
+                type="number"
+                name="edad"
+                required
+                value={formData.edad}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+                placeholder="Años"
+              />
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Edad *</label>
-            <input
-              type="number"
-              name="edad"
-              required
-              value={formData.edad}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
-              placeholder="Años"
-            />
+          <div className="grid grid-cols-3 gap-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Género</label>
+              <select
+                name="genero"
+                value={formData.genero}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">-</option>
+                <option value="M">M</option>
+                <option value="F">F</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Cabello</label>
+              <select
+                name="colorCabello"
+                value={formData.colorCabello}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">-</option>
+                <option value="negro">Negro</option>
+                <option value="castano">Castaño</option>
+                <option value="rubio">Rubio</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Ojos</label>
+              <select
+                name="colorOjos"
+                value={formData.colorOjos}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">-</option>
+                <option value="marron">Marrón</option>
+                <option value="negro">Negro</option>
+                <option value="verde">Verde</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Altura (cm)</label>
+              <input
+                type="text"
+                name="altura"
+                value={formData.altura}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+                placeholder="Ej: 120"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Fecha desaparición</label>
+              <input
+                type="date"
+                name="fechaDesaparicion"
+                value={formData.fechaDesaparicion}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
           </div>
 
           <div>
